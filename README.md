@@ -47,7 +47,6 @@ To run the application, navigate to the application's directory and execute:
 ```bash
 python openai-prompter.py
 ```
-(This assumes that `main.py` is the main program file.)
 
 ## Contributing
 Contributions to the GPT Turbo Prompter are welcome. If you have a suggestion that would make this better, please fork the repo and create a pull request.
@@ -58,7 +57,4 @@ Please ensure that you comply with the OpenAI API License Agreement when using t
 ## Acknowledgements
 - This project utilizes the OpenAI API; make sure to adhere to their usage policies.
 - Thanks to the PyQt5 community for the excellent tools that make such applications possible.
-
-
-> Note: This README assumes that the application's main file is `main.py`, please adjust the `Running the Application` section according to the real entry point of your application.
 
