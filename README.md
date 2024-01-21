@@ -45,7 +45,7 @@ To start using the GPT Turbo Prompter, follow these steps:
 To run the application, navigate to the application's directory and execute:
 
 ```bash
-python main.py
+python openai-prompter.py
 ```
 (This assumes that `main.py` is the main program file.)
 
