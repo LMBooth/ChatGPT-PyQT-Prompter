@@ -157,10 +157,12 @@ class GPTPrompter(QWidget):
         try:
             client = OpenAI(api_key=self.apiKey)
             response = client.chat.completions.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content":"test"}])
-            if response.status_code == 200 and 'choices' in response and len(response['choices']) > 0:
-                return response['choices'][0]['message']['content']
+            print(response)
+            print(response.choices[0].message.content)
+            if len(response.choices[0].message.content) > 0:
+                self.apiKeyStatusLabel.setText("API Key Status: Valid")
             else:
-                return "Invalid response structure or empty response."
+                self.apiKeyStatusLabel.setText("API Key Status: Invalid response structure or empty response.")
         except Exception as e:
             self.apiKeyStatusLabel.setText("API Key Status: Invalid - " + str(e))
 
