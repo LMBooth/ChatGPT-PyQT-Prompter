@@ -3,6 +3,8 @@
 
 GPT Turbo Prompter is a desktop application built with PyQt5 that allows users to interact with various OpenAI models. Users can provide prompts to the models and receive generated responses. The application supports setting an API key, choosing different models, maintaining a history of prompts, and displaying the models' responses.
 
+NOTE: "gpt-4-1106-preview" is GPT4 - Turbo!
+
 ## Features
 
 - Set the OpenAI API Key interactively.
