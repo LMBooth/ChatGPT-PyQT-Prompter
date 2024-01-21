@@ -23,7 +23,7 @@ Before you begin, ensure you have met the following requirements:
 To use the GPT Turbo Prompter, clone the repository to your local machine and install the dependencies if you haven't already by running the following commands:
 
 ```bash
-git clone https://github.com/your-username/gpt-turbo-prompter.git
+git clone https://github.com/LMBooth/ChatGPT-pyqt-prompter.git
 cd gpt-turbo-prompter
 pip install PyQt5
 pip install openai
@@ -54,9 +54,6 @@ Contributions to the GPT Turbo Prompter are welcome. If you have a suggestion th
 
 ## License
 Please ensure that you comply with the OpenAI API License Agreement when using this application.
-
-## Contact Information
-If you have any questions, feel free to [contact the author](mailto:your-email@example.com).
 
 ## Acknowledgements
 - This project utilizes the OpenAI API; make sure to adhere to their usage policies.
