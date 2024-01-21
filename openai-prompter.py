@@ -61,8 +61,10 @@ class GPTPrompter(QWidget):
         layout = QVBoxLayout()
         # API Key Status Label
         self.apiKeyStatusLabel = QLabel("API Key Status: Unknown")  # Add this label to show status
+        self.apiKeyStatusLabel.setWordWrap(True)  # Enable word wrapping
         layout.addWidget(self.apiKeyStatusLabel)
         self.loadingStatusLabel = QLabel("Status: Ready", self)
+        self.loadingStatusLabel.setWordWrap(True)  # Enable word wrapping
         self.loadingStatusLabel.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.loadingStatusLabel)
         # API Key Button
@@ -155,10 +157,10 @@ class GPTPrompter(QWidget):
         try:
             client = OpenAI(api_key=self.apiKey)
             response = client.chat.completions.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content":"test"}])
-            if response:
-                self.apiKeyStatusLabel.setText("API Key Status: Valid")
+            if response.status_code == 200 and 'choices' in response and len(response['choices']) > 0:
+                return response['choices'][0]['message']['content']
             else:
-                self.apiKeyStatusLabel.setText("API Key Status: Invalid")
+                return "Invalid response structure or empty response."
         except Exception as e:
             self.apiKeyStatusLabel.setText("API Key Status: Invalid - " + str(e))
 
