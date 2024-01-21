@@ -62,6 +62,9 @@ class GPTPrompter(QWidget):
         # API Key Status Label
         self.apiKeyStatusLabel = QLabel("API Key Status: Unknown")  # Add this label to show status
         layout.addWidget(self.apiKeyStatusLabel)
+        self.loadingStatusLabel = QLabel("Status: Ready", self)
+        self.loadingStatusLabel.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.loadingStatusLabel)
         # API Key Button
         self.apiKeyButton = QPushButton("Set API Key", self)
         self.apiKeyButton.clicked.connect(self.setApiKey)
@@ -110,12 +113,17 @@ class GPTPrompter(QWidget):
         self.history.append(prompt)
         self.updateHistoryComboBox()
 
+        self.loadingStatusLabel.setText("Status: Loading...")
+        self.sendButton.setDisabled(True)
+
         self.thread = WorkerThread(self.apiKey, model, prompt)
         self.thread.responseSignal.connect(self.handleResponse)
         self.thread.start()
-
+        
     @pyqtSlot(str, str)
     def handleResponse(self, response, error):
+        self.loadingStatusLabel.setText("Status: Ready")
+        self.sendButton.setDisabled(False)
         if error:
             QMessageBox.critical(self, "Error", str(error))
         else:
@@ -131,8 +139,7 @@ class GPTPrompter(QWidget):
         self.historyComboBox.addItems(self.history)
 
     def applyStyling(self):
-        self.setStyleSheet("QWidget { font-size: 14pt; } QPushButton { background-color: lightgray; }")
-
+        self.setStyleSheet("QWidget { font-size: 14pt; } QPushButton { background-color: lightgray; } QLabel { font-weight: bold; }")
     def setApiKey(self):
         text, ok = QInputDialog.getText(self, 'Set API Key', 'Enter your API key:')
         if ok and text:
