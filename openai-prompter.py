@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QVBoxLayout, QTextEdit,
                              QLabel, QInputDialog)
 from PyQt5.QtCore import pyqtSlot, QSize, Qt, QThread, pyqtSignal
 from PyQt5.QtGui import QFont
+import openai
 from openai import OpenAI
 import json
 import os
@@ -26,17 +27,41 @@ class WorkerThread(QThread):
         except Exception as e:
             self.responseSignal.emit(None, str(e))
 
+def loadApiKey():
+    if os.path.exists("api_key.json"):
+        with open("api_key.json", "r") as file:
+            data = json.load(file)
+            return  data.get("api_key", "")
+    else:
+        return ""
+
 class GPTPrompter(QWidget):
     def __init__(self):
         super().__init__()
+        self.initUI()
         self.history = []
         self.apiKey = ""
-        self.initUI()
+        value = os.environ['OPENAI_API_KEY']
+        if value is not None:
+            self.apiKey = value
+            self.validateApiKey()
+            print(f"OPENAI_API_KEY Environment variable is set to: {value}")
+        else:
+            self.apiKey = loadApiKey()
+            if self.apiKey == "":
+                self.apiKeyStatusLabel.setText("API Key Status: None found.")
+                print("key saved to local csv from previous use.")
+            else:
+                self.validateApiKey()
+            print(f"OPENAI_API_KEY Environment variable is not set.")
+        
 
     def initUI(self):
         self.resize(1000, 800)
         layout = QVBoxLayout()
-
+        # API Key Status Label
+        self.apiKeyStatusLabel = QLabel("API Key Status: Unknown")  # Add this label to show status
+        layout.addWidget(self.apiKeyStatusLabel)
         # API Key Button
         self.apiKeyButton = QPushButton("Set API Key", self)
         self.apiKeyButton.clicked.connect(self.setApiKey)
@@ -76,8 +101,8 @@ class GPTPrompter(QWidget):
 
         self.setLayout(layout)
         self.setWindowTitle("GPT Turbo Prompter")
-        self.loadApiKey()
-
+        loadApiKey()
+    
     @pyqtSlot()
     def onSendClicked(self):
         model = self.modelSelection.currentText()
@@ -113,16 +138,22 @@ class GPTPrompter(QWidget):
         if ok and text:
             self.apiKey = text
             self.saveApiKey()
-
-    def loadApiKey(self):
-        if os.path.exists("api_key.json"):
-            with open("api_key.json", "r") as file:
-                data = json.load(file)
-                self.apiKey = data.get("api_key", "")
+        self.validateApiKey() 
 
     def saveApiKey(self):
         with open("api_key.json", "w") as file:
             json.dump({"api_key": self.apiKey}, file)
+
+    def validateApiKey(self):
+        try:
+            client = OpenAI(api_key=self.apiKey)
+            response = client.chat.completions.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content":"test"}])
+            if response:
+                self.apiKeyStatusLabel.setText("API Key Status: Valid")
+            else:
+                self.apiKeyStatusLabel.setText("API Key Status: Invalid")
+        except Exception as e:
+            self.apiKeyStatusLabel.setText("API Key Status: Invalid - " + str(e))
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
