@@ -24,7 +24,7 @@ To use the GPT Turbo Prompter, clone the repository to your local machine and in
 
 ```bash
 git clone https://github.com/LMBooth/ChatGPT-PyQT-Prompter.git
-cd gpt-turbo-prompter
+cd ChatGPT-PyQT-Prompter
 pip install PyQt5
 pip install openai
 ```
