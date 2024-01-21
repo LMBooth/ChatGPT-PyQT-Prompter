@@ -63,3 +63,7 @@ Please ensure that you comply with the OpenAI API License Agreement when using t
 - This project utilizes the OpenAI API; make sure to adhere to their usage policies.
 - Thanks to the PyQt5 community for the excellent tools that make such applications possible.
 
+## TODO:
+- Add file uploader.
+- Update stylesheets.
+
