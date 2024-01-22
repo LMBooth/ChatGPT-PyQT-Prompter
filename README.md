@@ -1,7 +1,7 @@
 
 # ChatGPT-PyQT-Prompter
 
-ChatGPT-PyQT-Prompter is a Python run desktop application built with PyQt5 that allows users to interact with various OpenAI models using their own API key, [keys found here](https://platform.openai.com/api-keys) (for more advanced models money must first be put on your account). 
+ChatGPT-PyQT-Prompter is a Python run desktop application built with PyQt5 that allows users to interact with various OpenAI models using your own API key, [keys found here](https://platform.openai.com/api-keys) (for more advanced models money must first be put on your account). 
 Users can provide prompts to the models and receive generated responses. The application supports setting an API key, choosing different models, maintaining a history of prompts, and displaying the models' responses.
 
 NOTE: "gpt-4-1106-preview" is GPT4 - Turbo!
