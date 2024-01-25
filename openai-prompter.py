@@ -9,7 +9,7 @@ import openai
 from openai import OpenAI
 import json
 import os
-
+models = ["gpt-4-turbo-preview","gpt-4-0125-preview","gpt-4-1106-preview", "gpt-4", "gpt-3.5-turbo","gpt-3.5-turbo-1106"]
 class WorkerThread(QThread):
     responseSignal = pyqtSignal(str, str)
 
@@ -74,7 +74,7 @@ class GPTPrompter(QWidget):
 
         # Model Selection
         self.modelSelection = QComboBox(self)
-        self.modelSelection.addItems(["gpt-3.5-turbo","gpt-3.5-turbo-1106", "gpt-4", "gpt-4-1106-preview"])
+        self.modelSelection.addItems(models)
         layout.addWidget(self.modelSelection)
 
          # Multi-Line Prompt Input
